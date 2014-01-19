@@ -1,6 +1,7 @@
 package com.mooo.GuildHub;
 import java.util.logging.Logger;
-//import org.bukkit.ChatColor;
+
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -19,6 +20,7 @@ public void onDisable(){
 getLogger().info("Teleport unloaded sucesfully");	
 }
 
+@SuppressWarnings("deprecation")
 public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
 {
 	Player player = (Player) sender;
@@ -34,6 +36,7 @@ public boolean onCommand(CommandSender sender, Command cmd, String commandLabel,
 			Player targetPlayer= player.getServer().getPlayer(args[0]);
 			Location targetPlayerLocation= targetPlayer.getLocation();
 			targetPlayer.teleport(targetPlayerLocation);
+			targetPlayer.playEffect(targetPlayer.getLocation(), Effect.ENDER_SIGNAL, 1);
 		}
 		catch(NullPointerException n)
 		{
@@ -50,6 +53,7 @@ public boolean onCommand(CommandSender sender, Command cmd, String commandLabel,
 		targetPlayer.teleport(targetPlayer1Location);
 		targetPlayer1.sendMessage(targetPlayer.getDisplayName() + " has been teleported to you");
 		targetPlayer.sendMessage("You have been teleported to " + targetPlayer1.getDisplayName());
+		targetPlayer.playEffect(targetPlayer.getLocation(), Effect.ENDER_SIGNAL, 1);
 	}
 	catch(NullPointerException n)
 	{
@@ -60,5 +64,6 @@ public boolean onCommand(CommandSender sender, Command cmd, String commandLabel,
 	
 	return false;
 }
+
 
 }
