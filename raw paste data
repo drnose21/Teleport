@@ -1,0 +1,64 @@
+package com.mooo.GuildHub;
+import java.util.logging.Logger;
+//import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
+public final class teleport extends JavaPlugin {
+public final Logger logger = Logger.getLogger("Minecraft");
+public static teleport plugin;
+
+@Override
+public void onEnable(){
+getLogger().info("Teleport loaded succesfully");
+}
+@Override
+public void onDisable(){
+getLogger().info("Teleport unloaded sucesfully");	
+}
+
+public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
+{
+	Player player = (Player) sender;
+	if(commandLabel.equalsIgnoreCase("tps"))
+	{
+	if(args.length==0)
+	{
+			player.sendMessage("The syntax you have entered is not correct you must type /tps (user that is being teleported) (target username)");
+	}
+	else if(args.length==1)
+	{
+		try{
+			Player targetPlayer= player.getServer().getPlayer(args[0]);
+			Location targetPlayerLocation= targetPlayer.getLocation();
+			targetPlayer.teleport(targetPlayerLocation);
+		}
+		catch(NullPointerException n)
+		{
+			player.sendMessage("The syntax you have entered is not correct you must type /tps (user that is being teleported) (target username)");
+		}
+	}
+	else if(args.length==2)
+	{
+	
+	try{
+		Player targetPlayer = player.getServer().getPlayer(args[0]);
+		Player targetPlayer1 = player.getServer().getPlayer(args[1]);
+		Location targetPlayer1Location= targetPlayer1.getLocation();
+		targetPlayer.teleport(targetPlayer1Location);
+		targetPlayer1.sendMessage(targetPlayer.getDisplayName() + " has been teleported to you");
+		targetPlayer.sendMessage("You have been teleported to " + targetPlayer1.getDisplayName());
+	}
+	catch(NullPointerException n)
+	{
+		player.sendMessage("Target player(s) is not online.");
+	}
+	}
+	}
+	
+	return false;
+}
+
+}
